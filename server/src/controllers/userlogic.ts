@@ -25,16 +25,28 @@ const addContent = async (req: Request, res: Response) => {
   }
 };
 
-// Route 4: Get User Content
+// Route 4: Get User Content (with optional search)
 const getUserContent = async (req: Request, res: Response) => {
-  // @ts-ignore
-  const userId = req.userId;
-  const content = await ContentModel.find({
-    userId: userId,
-  }).populate("userId", "username");
+  try {
+    // @ts-ignore
+    const userId = req.userId;
+    const searchQuery = req.query.search as string;
 
-  res.json({ content });
+    // Build a dynamic filter
+    const filter: any = { userId };
+
+    if (searchQuery) {
+      filter.title = { $regex: searchQuery, $options: "i" }; // Case-insensitive search
+    }
+
+    const content = await ContentModel.find(filter).populate("userId", "username");
+
+    res.json({ content });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
 };
+
 
 // Route 5: Delete User Content
 const deleteUserContent = async (req: Request, res: Response) => {
