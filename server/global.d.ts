@@ -1,11 +1,20 @@
+// src/types/global.d.ts or types/express/index.d.ts
 
-// src/global.d.ts or src/types/global.d.ts
+import { Request, Response, NextFunction } from 'express';
 
-export {}; // Ensures this file is treated as a module.
+export {}; // Makes this a module
+
 declare global {
-    namespace Express {
-      interface Request {
-        userId?: string; // or the type you expect
-      }
+  namespace Express {
+    interface Request {
+      userId?: string;
     }
   }
+}
+
+// Optional: reusable middleware type alias
+export type ExpressMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => void | Promise<void>;

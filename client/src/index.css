@@ -176,4 +176,8 @@ body {
   body {
     @apply bg-background text-foreground font-poppins;
   }
+  
+}/* globals.css */
+html {
+  scroll-behavior: smooth;
 }
