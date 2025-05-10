@@ -8,12 +8,14 @@ const addContent = async (req: Request, res: Response) => {
   try {
     const link = req.body.link;
     const type = req.body.type;
+    const description= req.body.description;
     const title = req.body.title;
 
     const content = await ContentModel.create({
       title,
       link,
       type,
+      description,
       // @ts-ignore
       userId: req.userId,
       tags: [],
@@ -55,9 +57,10 @@ const deleteUserContent = async (req: Request, res: Response) => {
     // @ts-ignore
     const userId = req.userId;
     await ContentModel.deleteOne({
-      contentId,
+      _id: contentId,
       userId,
     });
+    
 
     res.json({ message: "deleted content " });
   } catch (error: any) {
