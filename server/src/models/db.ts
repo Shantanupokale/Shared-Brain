@@ -12,6 +12,8 @@ export const UserModel = model("User", UserSchema);
 const ContentSchema = new Schema({
     title:{type:String , required :true },
     link : String,
+    type : String,
+     description: { type: String, default: "" },
     tags:[{type: mongoose.Types.ObjectId, ref :'Tag'}],
     userId:{type : mongoose.Types.ObjectId , ref: 'User', required:true} ,
 })
