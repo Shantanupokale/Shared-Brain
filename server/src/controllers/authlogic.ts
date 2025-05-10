@@ -1,7 +1,17 @@
 import { Request, Response } from "express";
 import { UserModel } from "../models/db";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../utils/config";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
+
+// Get JWT secret from environment
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error("JWT_SECRET is not defined in environment variables");
+}
+
 
 // Route 1: User Signup
 const signup = async (req: Request, res: Response): Promise<void> => {
@@ -30,6 +40,8 @@ const signin = async (req: Request, res: Response): Promise<void> => {
 
     if (existingUser) {
         const token = jwt.sign({ id: existingUser._id }, JWT_SECRET);
+        console.log("Generated token:", token);
+
 
         res.status(200).json({ token });
     } else {

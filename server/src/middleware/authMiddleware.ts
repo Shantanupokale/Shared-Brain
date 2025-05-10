@@ -1,31 +1,53 @@
 declare global {
   namespace Express {
     interface Request {
-      userId?: string; // or the type you expect
+      userId?: string;
     }
   }
 }
 
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../utils/config";
+
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET is not defined in environment variables");
+}
 
 export const userMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const header= req.headers["authorization"];
-  const decoded = jwt.verify(header as string , JWT_SECRET)
+): void => {
+  try {
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) {
+      res.status(401).json({ message: "Authorization header missing" });
+      return;
+    }
 
-  if(decoded){
-    //@ts-ignore
-    req.userId = decoded.id;  // here req.userId will be sent in json as decode 
-    //value from the database
-    next()
-  }else{
-    res.status(400).json({
-      message : "Incorrect Credentails"
-    })
+    const token = authHeader;
+    if (!token) {
+      res.status(401).json({ message: "Token not provided" });
+      return;
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+    req.userId = decoded.id;
+    next();
+  } catch (error) {
+    console.error("Authentication error:", error);
+
+    if (error instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ message: "Token expired" });
+      return;
+    }
+
+    if (error instanceof jwt.JsonWebTokenError) {
+      res.status(401).json({ message: "Invalid token" });
+      return;
+    }
+
+    res.status(500).json({ message: "Authentication failed" });
   }
 };
