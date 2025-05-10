@@ -5,8 +5,8 @@ import HeroSection from "../components/LandingComponents/HeroSection";
 import FeaturesSection from "../components/LandingComponents/FeaturesSection";
 import LoveSection from "../components/LandingComponents/LoveSection";
 import Footer from "../components/LandingComponents/Footer";
-import SigninModal from "../components/SigninModal";  // Import SigninModal
-import SignupModal from "../components/SignupModal";  // Import SignupModal
+import SigninModal from "../components/LandingComponents/SigninModal";  // Import SigninModal
+import SignupModal from "../components/LandingComponents/SignupModal";  // Import SignupModal
 
 export default function LandingPage() {
   const [isSigninModalOpen, setSigninModalOpen] = useState(false);
@@ -30,7 +30,8 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="font-sans text-gray-900">
+    <div className="font-sans text-gray-900 scroll-smooth">
+
       <Navbar openSigninModal={openSigninModal} openSignupModal={openSignupModal} />
       <HeroSection />
       <FeaturesSection />
