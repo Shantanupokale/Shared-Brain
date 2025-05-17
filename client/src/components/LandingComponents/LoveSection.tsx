@@ -1,77 +1,188 @@
 "use client";
 
-import type React from "react";
+import React from "react";
+import { motion } from "framer-motion";
+
+// Animation variants
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const cardVariant = {
+  hidden: { 
+    opacity: 0, 
+    y: 30,
+    scale: 0.95
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { 
+      type: "spring",
+      damping: 15,
+      stiffness: 100,
+      duration: 0.5
+    },
+  },
+  hover: {
+    y: -5,
+    scale: 1.02,
+    transition: { 
+      type: "spring",
+      damping: 10,
+      stiffness: 300
+    }
+  }
+};
+
+const titleVariant = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10
+    }
+  }
+};
+
+const subtitleVariant = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.2,
+      duration: 0.6
+    }
+  }
+};
+
+const iconVariant = {
+  hidden: { scale: 0.8, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 150
+    }
+  }
+};
 
 const LoveSection: React.FC = () => {
   return (
     <section
-      className="py-4 px-4 bg-[#3b73ed]"
+      className="py-16 px-4 bg-[#3b73ed] overflow-hidden"
       role="region"
       aria-label="Who this Second Brain is built for"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl text-black md:text-4xl font-bold mb-4 font-satoshi">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={container}
+          className="text-center mb-16"
+        >
+          <motion.h2 
+            variants={titleVariant}
+            className="text-3xl text-black md:text-4xl font-bold mb-4 font-satoshi"
+          >
             Built for Every <span className="text-white">Mind</span>
-          </h2>
-          <p className="text-gray-800 font-medium max-w-2xl mx-auto font-inter">
+          </motion.h2>
+          <motion.p 
+            variants={subtitleVariant}
+            className="text-gray-800 font-medium max-w-2xl mx-auto font-inter"
+          >
             Whether you're capturing inspiration or researching deeply,
             your second brain keeps everything organized and within reach.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid md:grid-cols-3 gap-8"
+        >
           {/* Content Creators */}
-          <article
-            className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black"
+          <motion.article
+            variants={cardVariant}
+            whileHover="hover"
+            className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black cursor-default"
             aria-label="For Content Creators"
           >
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <motion.div 
+              variants={iconVariant}
+              className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
+            >
               <span className="text-blue-600 text-xl" role="img" aria-label="Camera emoji">
                 📸
               </span>
-            </div>
+            </motion.div>
             <h3 className="text-xl font-bold mb-2 font-grotesk">Content Creators</h3>
             <p className="text-gray-600 font-inter">
               Save tweets, inspiration, video links & quotes to fuel your next idea.
               Stay creative with your personal knowledge vault.
             </p>
-          </article>
+          </motion.article>
 
           {/* Lifelong Learners */}
-          <article
-            className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black"
+          <motion.article
+            variants={cardVariant}
+            whileHover="hover"
+            className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black cursor-default"
             aria-label="For Lifelong Learners"
           >
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <motion.div 
+              variants={iconVariant}
+              className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
+            >
               <span className="text-blue-600 text-xl" role="img" aria-label="Book emoji">
                 📚
               </span>
-            </div>
+            </motion.div>
             <h3 className="text-xl font-bold mb-2 font-grotesk">Lifelong Learners</h3>
             <p className="text-gray-600 font-inter">
               Capture URLs, YouTube videos, and article summaries so nothing
               gets lost. Build your second brain as you explore.
             </p>
-          </article>
+          </motion.article>
 
           {/* Knowledge Workers */}
-          <article
-            className="bg-white p-6 md:p-8 rounded-2xl  border-2 border-black shadow-md hover:shadow-lg transition-all"
+          <motion.article
+            variants={cardVariant}
+            whileHover="hover"
+            className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black cursor-default"
             aria-label="For Knowledge Workers"
           >
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <motion.div 
+              variants={iconVariant}
+              className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
+            >
               <span className="text-blue-600 text-xl" role="img" aria-label="Laptop emoji">
                 💻
               </span>
-            </div>
+            </motion.div>
             <h3 className="text-xl font-bold mb-2 font-grotesk">Knowledge Workers</h3>
             <p className="text-gray-600 font-inter">
               Structure your thoughts, save research, and find ideas quickly.
               Boost productivity with a system that thinks with you.
             </p>
-          </article>
-        </div>
+          </motion.article>
+        </motion.div>
       </div>
     </section>
   );
