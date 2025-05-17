@@ -1,24 +1,32 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import LandingPage from "@/pages/LandingPage";
 import ProtectedRoute from "./ProtectedRoutes";
+import Dashboard from "@/components/Dashboard/Dashboard";
+import SharedBrain from "@/components/SharedBrainPage/SharedBrain";
+import NotFound from "@/pages/NotFound";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-   
-      {/* Example of protected route usage */}
+      
+      {/* Wrapping the Dashboard route with ProtectedRoute */}
       <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <div className="text-center text-2xl font-bold p-10">
-              Dashboard (Protected)
-            </div>
+            <Dashboard />
           </ProtectedRoute>
         }
       />
+      <Route 
+      path="/brain/shared"
+      element={<SharedBrain shareLink=""/>}
+      />
+
+      {/* 🔥 Catch-all route for invalid URLs */}
+        <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
