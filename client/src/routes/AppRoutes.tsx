@@ -20,10 +20,8 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      <Route 
-      path="/brain/shared"
-      element={<SharedBrain shareLink=""/>}
-      />
+      
+      <Route path="/brain/:shareLink" element={<SharedBrain />} />
 
       {/* 🔥 Catch-all route for invalid URLs */}
         <Route path="*" element={<NotFound />} />
