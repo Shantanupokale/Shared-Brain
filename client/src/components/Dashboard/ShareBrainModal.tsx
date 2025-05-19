@@ -25,7 +25,7 @@ interface ShareBrainModalProps {
   onClose: () => void
 }
 
-const API_BASE_URL = "http://localhost:3000/api/v1"
+const API_BASE_URL = "https://shared-brain-alpha.vercel.app/api/v1"
 
 const ShareBrainModal: React.FC<ShareBrainModalProps> = ({ isOpen, onClose }) => {
   const [isSharing, setIsSharing] = useState(false)

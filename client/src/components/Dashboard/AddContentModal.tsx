@@ -333,7 +333,7 @@ const AddContentModal = ({ isOpen, onClose }: AddContentModalProps) => {
       if (!token) throw new Error("No auth token found")
 
       const response = await axios.post(
-        "http://localhost:3000/api/v1/content",
+        "https://shared-brain-alpha.vercel.app/api/v1/content",
         contentData,
         {
           headers: {

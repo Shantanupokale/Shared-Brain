@@ -39,7 +39,7 @@ const SharedBrain = () => {
         setIsLoading(true)
         setError("")
         
-        const response = await fetch(`http://localhost:3000/api/v1/brain/${shareLink}`)
+        const response = await fetch(`https://shared-brain-alpha.vercel.app/api/v1/brain/${shareLink}`)
         
         if (!response.ok) {
           throw new Error("Failed to fetch shared content")
