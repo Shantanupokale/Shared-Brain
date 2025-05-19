@@ -36,7 +36,7 @@ const fetchContents = async (activeTab: string, searchQuery: string): Promise<Co
   }
 
   try {
-    const response = await axios.get("http://localhost:3000/api/v1/content", {
+    const response = await axios.get("https://shared-brain-alpha.vercel.app/api/v1/content", {
       params,
       headers: {
         'Authorization': token, // ✅ Just the token, no Bearer
@@ -59,6 +59,8 @@ const Dashboard = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+
+  
   const queryClient = useQueryClient()
   // TanStack Query for fetching content
   const { data: contents, isLoading, error } = useQuery({
@@ -74,7 +76,7 @@ const Dashboard = () => {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("No auth token found");
 
-  await axios.delete("http://localhost:3000/api/v1/content", {
+  await axios.delete("https://shared-brain-alpha.vercel.app/api/v1/content", {
     headers: {
       'Authorization': token,
     },

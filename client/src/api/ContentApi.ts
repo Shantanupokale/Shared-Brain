@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://shared-brain-alpha.vercel.app/";
 
 // Fetching contents logic
 interface FetchContentsParams {
