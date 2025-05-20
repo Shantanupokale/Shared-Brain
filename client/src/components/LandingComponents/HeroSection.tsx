@@ -6,9 +6,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import SigninModal from "./SigninModal";
+import SignupModal from "./SignupModal";
+
 
 // Animation Variants
 const container = {
@@ -73,6 +76,19 @@ const dotVariant = {
 
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
+    const [signupOpen, setSignupOpen] = useState(false);
+    const [signinOpen, setSigninOpen] = useState(false);
+
+
+    const handleClick = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard');
+    } else {
+      setSignupOpen(true);
+    }
+  };
+
 
   return (
     <section className="bg-[#3b73ed] h-[100vh] px-4 flex flex-col justify-center overflow-hidden">
@@ -129,7 +145,7 @@ const HeroSection: React.FC = () => {
             <Button
               size="lg"
               className="bg-black text-white rounded-full px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-gradient-to-r hover:from-black hover:to-gray-800"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => handleClick()}
             
           
             >
@@ -181,6 +197,27 @@ const HeroSection: React.FC = () => {
           </motion.div>
         ))}
       </motion.div>
+      {signupOpen && (
+                  <SignupModal
+                    onClose={() => setSignupOpen(false)}
+                    onSwitchToSignin={() => {
+                      // Handle switching logic here if needed
+                      setSignupOpen(false);
+                      setSigninOpen(true);
+                    }}
+                  />
+                )}
+      
+                {signinOpen && (
+                  <SigninModal
+                    onClose={() => setSigninOpen(false)}
+                    onSwitchToSignup={() => {
+                      // Handle switching logic here if needed
+                      setSignupOpen(true);
+                      setSigninOpen(false);
+                    }}
+                  />
+                )}
     </section>
   );
 };
