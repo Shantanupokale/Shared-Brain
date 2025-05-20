@@ -90,7 +90,7 @@ export default function SignupModal({ onClose, onSwitchToSignin }: SignupModalPr
               <Input
                 id="username"
                 type="text"
-                placeholder="johndoe"
+                placeholder="Username"
                 className="bg-gray-50 mt-1 text-black font-inter border border-gray-200 focus:border-black"
                 required
                 value={username}
