@@ -3,14 +3,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// Animation variants
+// Enhanced animation variants
 const container = {
   hidden: { opacity: 0 },
-  visible: {
+  show: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.2,
+      delayChildren: 0.3,
     },
   },
 };
@@ -18,47 +18,57 @@ const container = {
 const cardVariant = {
   hidden: { 
     opacity: 0, 
-    y: 30,
-    scale: 0.95
+    y: 40,
+    scale: 0.95,
+    rotate: -1
   },
-  visible: {
+  show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { 
+    rotate: 0,
+    transition: {
       type: "spring",
       damping: 15,
       stiffness: 100,
-      duration: 0.5
+      duration: 0.7
     },
   },
   hover: {
-    y: -5,
-    scale: 1.02,
-    transition: { 
+    y: -8,
+    scale: 1.03,
+    rotate: 0.5,
+    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    transition: {
       type: "spring",
+      stiffness: 300,
       damping: 10,
-      stiffness: 300
+      duration: 0.3
     }
+  },
+  tap: {
+    scale: 0.98,
+    rotate: -0.5
   }
 };
 
 const titleVariant = {
   hidden: { opacity: 0, y: 20 },
-  visible: {
+  show: {
     opacity: 1,
     y: 0,
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 10
+      damping: 10,
+      duration: 0.8
     }
   }
 };
 
 const subtitleVariant = {
   hidden: { opacity: 0, y: 10 },
-  visible: {
+  show: {
     opacity: 1,
     y: 0,
     transition: {
@@ -69,13 +79,22 @@ const subtitleVariant = {
 };
 
 const iconVariant = {
-  hidden: { scale: 0.8, opacity: 0 },
-  visible: {
+  hidden: { scale: 0.8, opacity: 0, rotate: -15 },
+  show: {
     scale: 1,
     opacity: 1,
+    rotate: 0,
     transition: {
       type: "spring",
-      stiffness: 150
+      stiffness: 200,
+      damping: 10
+    }
+  },
+  hover: {
+    scale: 1.1,
+    rotate: [0, 5, -5, 0],
+    transition: {
+      duration: 0.6
     }
   }
 };
@@ -90,8 +109,8 @@ const LoveSection: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
           variants={container}
           className="text-center mb-16"
         >
@@ -105,27 +124,28 @@ const LoveSection: React.FC = () => {
             variants={subtitleVariant}
             className="text-gray-800 font-medium max-w-2xl mx-auto font-inter"
           >
-            Whether you're capturing inspiration or researching deeply,
-            your second brain keeps everything organized and within reach.
+            Whether you're capturing inspiration or researching deeply, your second brain keeps everything organized and within reach.
           </motion.p>
         </motion.div>
 
         <motion.div
           variants={container}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
           className="grid md:grid-cols-3 gap-8"
         >
           {/* Content Creators */}
           <motion.article
             variants={cardVariant}
             whileHover="hover"
+            whileTap="tap"
             className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black cursor-default"
             aria-label="For Content Creators"
           >
             <motion.div 
               variants={iconVariant}
+              whileHover="hover"
               className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
             >
               <span className="text-blue-600 text-xl" role="img" aria-label="Camera emoji">
@@ -143,11 +163,13 @@ const LoveSection: React.FC = () => {
           <motion.article
             variants={cardVariant}
             whileHover="hover"
+            whileTap="tap"
             className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black cursor-default"
             aria-label="For Lifelong Learners"
           >
             <motion.div 
               variants={iconVariant}
+              whileHover="hover"
               className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
             >
               <span className="text-blue-600 text-xl" role="img" aria-label="Book emoji">
@@ -165,11 +187,13 @@ const LoveSection: React.FC = () => {
           <motion.article
             variants={cardVariant}
             whileHover="hover"
+            whileTap="tap"
             className="bg-white p-6 md:p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-black cursor-default"
             aria-label="For Knowledge Workers"
           >
             <motion.div 
               variants={iconVariant}
+              whileHover="hover"
               className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
             >
               <span className="text-blue-600 text-xl" role="img" aria-label="Laptop emoji">
