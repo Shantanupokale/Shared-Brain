@@ -1,6 +1,4 @@
 
-
-
 "use client"
 
 import type React from "react"
@@ -12,7 +10,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
@@ -119,7 +116,6 @@ const ShareBrainModal: React.FC<ShareBrainModalProps> = ({ isOpen, onClose }) =>
     } catch (err: any) {
       console.error("Failed to toggle sharing", err)
       setError(err.message || "Failed to toggle sharing")
-      // Revert the switch if the operation failed
       setIsSharing(prev => !prev)
     } finally {
       setIsLoading(false)
@@ -137,46 +133,49 @@ const ShareBrainModal: React.FC<ShareBrainModalProps> = ({ isOpen, onClose }) =>
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] font-inter">
-        <DialogHeader>
-          <DialogTitle className="font-satoshi text-xl">Share Your Brain</DialogTitle>
-          <DialogDescription>
-            Share your brain with others. They'll be able to see all your saved content but won't be able to modify it.
+      <DialogContent className="w-[85vw] max-w-[90vw] sm:max-w-[425px] font-inter p-4 sm:p-6 rounded-xl border border-gray-600">
+        <DialogHeader className="text-left">
+          <DialogTitle className="font-satoshi text-lg sm:text-xl">
+            Share Your Brain
+          </DialogTitle>
+          <DialogDescription className="text-sm sm:text-base">
+            Share your brain with others. They'll see your content but won't be able to modify it.
           </DialogDescription>
         </DialogHeader>
 
         {error && (
-          <div className="mb-4 bg-red-50 border-l-4 border-red-500 p-4 text-red-700">
+          <div className="mb-3 bg-red-50 border-l-4 border-red-500 p-3 text-sm text-red-700">
             <p>{error}</p>
           </div>
         )}
 
-        <div className="flex items-center justify-between py-4">
-          <Label htmlFor="sharing-toggle" className="font-medium">
-            {isSharing ? "Your brain is currently shared" : "Your brain is not shared"}
+        <div className="flex items-center justify-between py-3 sm:py-4">
+          <Label htmlFor="sharing-toggle" className="text-sm sm:text-base font-medium">
+            {isSharing ? "Sharing enabled" : "Sharing disabled"}
           </Label>
           <Switch 
             id="sharing-toggle" 
             checked={isSharing} 
             onCheckedChange={toggleSharing} 
             disabled={isLoading} 
+            className="scale-90 sm:scale-100"
           />
         </div>
 
         {isSharing && shareHash && (
           <div className="space-y-2">
-            <Label htmlFor="share-link">Share Link</Label>
-            <div className="flex">
+            <Label htmlFor="share-link" className="text-sm sm:text-base">Share Link</Label>
+            <div className="flex flex-row sm:flex-row gap-2">
               <Input
                 id="share-link"
                 value={`${window.location.origin}/brain/${shareHash}`}
                 readOnly
-                className="rounded-r-none"
+                className="rounded sm:rounded-r-none sm:rounded-lg text-xs"
               />
               <Button 
                 type="button" 
                 onClick={handleCopyLink} 
-                className="rounded-l-none bg-[#3b73ed] hover:bg-[#2a5cc9]"
+                className="rounded sm:rounded-md bg-[#3b73ed] hover:bg-[#2a5cc9]"
                 disabled={isLoading}
               >
                 {copied ? "Copied!" : <Copy className="h-4 w-4" />}
@@ -185,11 +184,16 @@ const ShareBrainModal: React.FC<ShareBrainModalProps> = ({ isOpen, onClose }) =>
           </div>
         )}
 
-        <DialogFooter className="mt-6">
-          <Button onClick={onClose} variant="outline" disabled={isLoading}>
+        <div className="mt-4 sm:mt-6 flex justify-end">
+          <Button 
+            onClick={onClose} 
+            variant="outline" 
+            disabled={isLoading}
+            className="w-full sm:w-auto"
+          >
             Close
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   )
