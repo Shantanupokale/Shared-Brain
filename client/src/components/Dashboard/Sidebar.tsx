@@ -5,6 +5,8 @@ import { Home, Youtube, Twitter, Search , LinkIcon, LogOut, Menu, X } from "luci
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
+import { motion } from "framer-motion"
+
 
 interface SidebarProps {
   activeTab: string
@@ -84,50 +86,57 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
 
       {/* Mobile Sidebar */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-30 bg-black/50">
-          <div className="fixed inset-y-0 left-0 w-64 bg-white p-6">
-            <div className="flex items-center justify-between">
-              <h1 className="text-xl font-bold font-grotesk text-[#3b73ed]">SecondBrain</h1>
-              <Button
-                onClick={toggleMobileMenu}
-                variant="ghost"
-                size="icon"
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X className="w-6 h-6" />
-              </Button>
-            </div>
+  <div className="fixed inset-0 z-50 bg-black/50">
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "-100%" }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed inset-y-0 left-0 w-64 bg-white p-6"
+    >
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold font-grotesk text-[#3b73ed]">SecondBrain</h1>
+        <Button
+          onClick={toggleMobileMenu}
+          variant="ghost"
+          size="icon"
+          className="text-gray-500 hover:text-gray-700"
+        >
+          <X className="w-6 h-6" />
+        </Button>
+      </div>
 
-            <nav className="mt-8 space-y-2">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => {
-                    setActiveTab(tab.id)
-                    setIsMobileMenuOpen(false)
-                  }}
-                  className={`flex items-center w-full px-4 py-3 text-sm font-medium rounded-md transition-colors ${
-                    activeTab === tab.id
-                      ? "bg-blue-100 text-[#3b73ed]"
-                      : "text-black/80 hover:bg-blue-50"
-                  }`}
-                >
-                  {tab.icon}
-                  <span className="ml-3 font-inter">{tab.name}</span>
-                </button>
-              ))}
+      <nav className="mt-8 space-y-2">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => {
+              setActiveTab(tab.id)
+              setIsMobileMenuOpen(false)
+            }}
+            className={`flex items-center w-full px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+              activeTab === tab.id
+                ? "bg-blue-100 text-[#3b73ed]"
+                : "text-black/80 hover:bg-blue-50"
+            }`}
+          >
+            {tab.icon}
+            <span className="ml-3 font-inter">{tab.name}</span>
+          </button>
+        ))}
 
-              <button
-                onClick={handleLogout}
-                className="flex items-center w-full mt-6 px-4 py-3 text-sm font-medium rounded-md text-red-500 hover:bg-red-100 transition-colors"
-              >
-                <LogOut className="w-5 h-5" />
-                <span className="ml-3 font-inter">Logout</span>
-              </button>
-            </nav>
-          </div>
-        </div>
-      )}
+        <button
+          onClick={handleLogout}
+          className="flex items-center w-full mt-6 px-4 py-3 text-sm font-medium rounded-md text-red-500 hover:bg-red-100 transition-colors"
+        >
+          <LogOut className="w-5 h-5" />
+          <span className="ml-3 font-inter">Logout</span>
+        </button>
+      </nav>
+    </motion.div>
+  </div>
+)}
+
     </>
   )
 }
