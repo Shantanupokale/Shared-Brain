@@ -22,21 +22,32 @@ export default function SignupModal({ onClose, onSwitchToSignin }: SignupModalPr
   const [password, setPassword] = useState("");
 
   const signupMutation = useMutation({
-    mutationFn: async () => {
-      const res = await axiosInstance.post("/user/signup", { username, password });
-      return res.data;
-    },
-    onSuccess: () => {
-      toast.success("Account created successfully!");
+  mutationFn: async () => {
+    const res = await axiosInstance.post("/user/signup", { username, password });
+    return res.data;
+  },
+  onSuccess: async () => {
+    toast.success("Account created successfully!");
+
+    // Now log in with same credentials
+    try {
+      const loginRes = await axiosInstance.post("/user/signin", { username, password });
+      localStorage.setItem("token", loginRes.data.token);
+      toast.success("Logged in successfully!");
+
       setTimeout(() => {
-        navigate("/");
+        navigate("/dashboard");
         onClose();
       }, 500);
-    },
-    onError: () => {
-      toast.error("Username already exists!");
-    },
-  });
+    } catch (err) {
+      toast.error("Something went wrong during login.");
+    }
+  },
+  onError: () => {
+    toast.error("Username already exists!");
+  },
+});
+
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

@@ -2,7 +2,8 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState ,useEffect  } from "react"
+import { useNavigate } from "react-router-dom"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Plus, Share, Loader2, Search } from "lucide-react"
 import Sidebar from "./Sidebar"
@@ -12,6 +13,7 @@ import ShareBrainModal from "./ShareBrainModal"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { motion  } from "framer-motion"
+import toast from "react-hot-toast"
 
 
 interface Content {
@@ -74,6 +76,18 @@ const Dashboard = () => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
 
+  const navigate=useNavigate();
+  useEffect(() => {
+  const handleStorage = () => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+       toast.success("Logged out successfully")
+    }
+  };
+  window.addEventListener("storage", handleStorage);
+  return () => window.removeEventListener("storage", handleStorage);
+}, [navigate]);
+
   const queryClient = useQueryClient()
 
   const { data: contents, isLoading, error } = useQuery({
@@ -90,7 +104,8 @@ const Dashboard = () => {
         'Authorization': token,
       },
       data: { Id: id },
-    })
+    }),
+    toast.success("Content deleted Successfully")
 
     queryClient.invalidateQueries({ queryKey: ['contents'] })
   }
