@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from "react"
 import { Trash2, Copy, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import ConfirmDeleteModal from "./ConfirmDeleteModal"
 
 interface ContentCardProps {
   id: string
@@ -18,6 +19,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, title, link, type, descri
   const [copied, setCopied] = useState(false)
   const twitterRef = useRef<HTMLDivElement | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [showConfirmModal, setShowConfirmModal] = useState(false); // ✅ modal state
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(link)
@@ -28,7 +30,8 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, title, link, type, descri
   const handleDelete = () => {
     if (onDelete) {
       onDelete(id)
-    }
+    };
+    setShowConfirmModal(false);
   }
 
   useEffect(() => {
@@ -98,6 +101,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, title, link, type, descri
   }, [type, link, isLoading])
 
   return (
+  <>
     <Card className="w-full h-auto sm:h-[470px] shadow-sm shadow-black/20 hover:shadow-lg hover:shadow-black/70 transition-all bg-[#f0f0f0] border-2 border-black rounded-2xl flex flex-col justify-between">
       <CardHeader className="pb-2  pt-4">
         <CardTitle className="font-satoshi text-black text-lg sm:text-lg">{title}</CardTitle>
@@ -122,7 +126,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, title, link, type, descri
           <Button
             variant="ghost"
             size="sm"
-            onClick={handleDelete}
+            onClick={()=> setShowConfirmModal(true)}
             className="w-full sm:w-auto text-red-500 bg-red-100 hover:text-red-700 hover:bg-red-200 flex items-center gap-1"
           >
             <Trash2 className="w-4 h-4" />
@@ -131,6 +135,13 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, title, link, type, descri
         )}
       </CardFooter>
     </Card>
+    
+      <ConfirmDeleteModal
+        open={showConfirmModal}
+        onCancel={() => setShowConfirmModal(false)}
+        onConfirm={handleDelete}
+      />
+    </>
   )
 }
 
