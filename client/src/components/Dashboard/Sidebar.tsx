@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Home, Youtube, Twitter, Search , LinkIcon, LogOut, Menu, X } from "lucide-react"
+import { Home, Youtube, Twitter, Search , LinkIcon, LogOut, Menu, X, Github, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
@@ -75,6 +75,16 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
 
         <div className="px-4 mt-6 mb-6">
           <button
+  onClick={() => window.open('https://github.com/Shantanupokale/Shared-Brain', '_blank')}
+  className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium rounded-xl text-white hover:bg-green-500 transition-colors mb-2"
+>
+  <div className="flex items-center">
+    <Github className="w-5 h-5" />
+    <span className="ml-3 font-inter">Star on GitHub</span>
+  </div>
+  <ArrowUpRight className="w-4 h-4 opacity-70" />
+</button>
+          <button
             onClick={handleLogout}
             className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-xl text-white hover:bg-red-500 transition-colors"
           >
@@ -124,6 +134,20 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
             <span className="ml-3 font-inter">{tab.name}</span>
           </button>
         ))}
+
+        <button
+  onClick={() => {
+    window.open('https://github.com/Shantanupokale/Shared-Brain', '_blank')
+    setIsMobileMenuOpen(false)
+  }}
+  className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium rounded-md text-gray-800 hover:bg-green-100 transition-colors"
+>
+  <div className="flex items-center">
+    <Github className="w-5 h-5" />
+    <span className="ml-3 font-inter">Star on GitHub</span>
+  </div>
+  <ArrowUpRight className="w-4 h-4 opacity-70" />
+</button>
 
         <button
           onClick={handleLogout}

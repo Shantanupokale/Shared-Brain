@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import SignupModal from "./SignupModal";
 import SigninModal from "./SigninModal";
 import { useState } from "react";
+import { Linkedin ,Twitter,Github } from "lucide-react";
 
 // Animation Variants
 const container = {
@@ -213,34 +214,58 @@ const Footer: React.FC = () => {
         </motion.div>
 
         {/* Bottom Legal Section */}
-        <motion.div
-          className="border-t border-white/20 pt-8 mt-8 text-sm text-black flex flex-col md:flex-row justify-between font-inter font-medium"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <div>
-            © {new Date().getFullYear()} Second Brain. All rights reserved.
-          </div>
-          <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-0">
-            {["Terms", "Privacy", "Made with ❤️ by Shantanu"].map((item, i) => (
-              <motion.a
-                key={i}
-                href={i === 2 ? "https://github.com/shantanupokale" : "#"}
-                target={i === 2 ? "_blank" : undefined}
-                rel={i === 2 ? "noopener noreferrer" : undefined}
-                className="hover:text-white"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 * i }}
-              >
-                {item}
-              </motion.a>
-            ))}
-          </div>
-        </motion.div>
+        {/* Bottom Legal Section */}
+<motion.div
+  className="border-t border-white/20 pt-8 mt-8 text-sm text-black flex flex-col md:flex-row justify-between font-inter font-medium"
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6, delay: 0.3 }}
+>
+  <div>
+    © {new Date().getFullYear()} Second Brain. All rights reserved.
+  </div>
+
+  {/* Social + Credits */}
+  <div className="flex flex-col md:flex-row items-start md:items-center mt-4 md:mt-0 space-y-2 md:space-y-0 md:space-x-6">
+    <div className="flex space-x-4">
+      <a
+        href="https://github.com/Shantanupokale"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        className="hover:text-white"
+      >
+        <Github className="w-5 h-5" />
+      </a>
+      <a
+        href="https://www.linkedin.com/in/shantanu-pokale"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        className="hover:text-white"
+      >
+        <Linkedin className="w-5 h-5" />
+      </a>
+      <a
+        href="https://x.com/ShantanuPokale"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Twitter"
+        className="hover:text-white"
+      >
+        <Twitter className="w-5 h-5" />
+      </a>
+    </div>
+
+    <div className="md:ml-6">
+      Made with
+      <span className="mx-1 text-red-500">❤️</span>
+      by Shantanu
+    </div>
+  </div>
+</motion.div>
+
       </div>
     </footer>
   );

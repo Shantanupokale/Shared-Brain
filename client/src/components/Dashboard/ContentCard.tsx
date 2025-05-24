@@ -68,7 +68,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, title, link, type, descri
       }
     } else if (type === "twitter") {
       return (
-        <div ref={twitterRef} className=" mb-1 sm:mb-4 rounded-xl overflow-x-auto -m-2  scrollbar-hidden max-h-96 ">
+        <div ref={twitterRef} className=" mb-1 sm:mb-4 rounded-xl overflow-x-auto -m-2  scrollbar-hidden max-h-80 ">
           {isLoading && <div className="flex justify-center items-center">Loading...</div>}
           <blockquote className="twitter-tweet">
             <a href={link.replace("x.com", "twitter.com")}></a>
@@ -85,15 +85,15 @@ const ContentCard: React.FC<ContentCardProps> = ({ id, title, link, type, descri
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#3b73ed] hover:underline font-inter break-words text-sm sm:text-base"
+            className="text-[#3b73ed] hover:underline overflow-auto font-inter break-words text-sm sm:text-xs "
           >
             {link}
           </a>
         </div>
         {description && (
-          <div className="mt-4 p-3 sm:p-4 bg-white border border-gray-200 rounded-lg shadow-sm text-sm text-gray-700">
+          <div className="mt-4 p-3 sm:p-4 bg-white border border-gray-200 rounded-lg shadow-sm text-sm text-gray-700 overflow-y-auto scrollbar-hidden max-h-96  sm:max-h-64  ">
             <h1 className="text-black font-semibold">Description</h1>
-            <p className="mt-2 break-words">{description}</p>
+            <p className="mt-2 sm:text-xs break-words">{description}</p>
           </div>
         )}
       </div>
